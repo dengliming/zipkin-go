@@ -27,6 +27,10 @@ before_install:
 install:
   - go get -d -t ./...
   - go get -u golang.org/x/lint/golint
+  # the command bellow makes it possible to still run the build in GO 1.9 as
+  # the support was removed in v1.30.1
+  # https://github.com/grpc/grpc-go/commit/bc714cd8aeaa4f1a59e055b5a6411a04b17fd319
+  - cd $GOPATH/src/google.golang.org/grpc && git fetch --tags && git checkout v1.30.0
 
 script:
   - make test vet lint bench
